@@ -1,10 +1,3 @@
-//
-//  UserDataViewModel.swift
-//  Arista
-//
-//  Created by Vincent Saluzzo on 08/12/2023.
-//
-
 import Foundation
 import CoreData
 
@@ -20,8 +13,14 @@ class UserDataViewModel: ObservableObject {
     }
 
     private func fetchUserData() {
-        // TODO: fetch data in CoreData and replace dumb value below with appropriate information
-        firstName = "Charlotte"
-        lastName = "Corino"
+        do {
+            guard let user = try UserRepository(viewContext: viewContext).getUser() else {
+                fatalError("User not found")
+            }
+            firstName = user.firstName ?? ""
+            lastName = user.lastName ?? ""
+        } catch {
+            print("Error when trying to get user: \(error)")
+        }
     }
 }

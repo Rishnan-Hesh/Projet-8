@@ -1,10 +1,3 @@
-//
-//  ExerciseListView.swift
-//  Arista
-//
-//  Created by Vincent Saluzzo on 08/12/2023.
-//
-
 import SwiftUI
 
 struct ExerciseListView: View {
@@ -15,18 +8,17 @@ struct ExerciseListView: View {
         NavigationView {
             List(viewModel.exercises) { exercise in
                 HStack {
-                    Image(systemName: iconForCategory(exercise.category))
+                    Image(systemName: iconForCategory(exercise.category ?? ""))
                     VStack(alignment: .leading) {
-                        Text(exercise.category)
+                        Text(exercise.category ?? "Inconnu")
                             .font(.headline)
-                        Text("Durée: \(exercise.duration) min")
+                        Text("Durée: \(Int(exercise.duration)) min")
                             .font(.subheadline)
-                        Text(exercise.date.formatted())
+                        Text((exercise.startDate ?? Date()).formatted())
                             .font(.subheadline)
-                        
                     }
                     Spacer()
-                    IntensityIndicator(intensity: exercise.intensity)
+                    IntensityIndicator(intensity: Int(exercise.intensity))
                 }
             }
             .navigationTitle("Exercices")
@@ -38,8 +30,10 @@ struct ExerciseListView: View {
         }
         .sheet(isPresented: $showingAddExerciseView) {
             AddExerciseView(viewModel: AddExerciseViewModel(context: viewModel.viewContext))
+                .onDisappear {
+                    viewModel.reload()
+                }
         }
-        
     }
     
     func iconForCategory(_ category: String) -> String {
