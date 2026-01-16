@@ -22,15 +22,6 @@ struct ExerciseRepository {
         exercise.intensity = Int64(intensity)
         exercise.startDate = startDate
         
-        // Debug, user trouvé ?
-        if let user = try? UserRepository(viewContext: viewContext).getUser() {
-            print("Utilisateur trouvé: \(user.firstName ?? "?")")
-            exercise.user = user
-        } else {
-            print("ERREUR : Aucun utilisateur trouvé !")
-            throw NSError(domain: "ExerciseRepository", code: 1, userInfo: [NSLocalizedDescriptionKey: "Aucun utilisateur trouvé"])
-        }
-        
         try viewContext.save()
     }
 }

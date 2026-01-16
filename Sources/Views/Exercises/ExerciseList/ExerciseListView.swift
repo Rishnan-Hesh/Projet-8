@@ -29,7 +29,7 @@ struct ExerciseListView: View {
             })
         }
         .sheet(isPresented: $showingAddExerciseView) {
-            AddExerciseView(viewModel: AddExerciseViewModel(context: viewModel.viewContext))
+            AddExerciseView(viewModel: AddExerciseViewModel())
                 .onDisappear {
                     viewModel.reload()
                 }
@@ -77,6 +77,10 @@ struct IntensityIndicator: View {
     }
 }
 
+#if DEBUG
+
 #Preview {
-    ExerciseListView(viewModel: ExerciseListViewModel(context: PersistenceController.preview.container.viewContext))
+    ExerciseListView(viewModel: ExerciseListViewModel())
 }
+
+#endif

@@ -2,7 +2,7 @@ import Foundation
 import CoreData
 
 class SleepHistoryViewModel: ObservableObject {
-    @Published var sleepSessions = [Sleep]()
+    @Published var sleepSessions = [SleepSession]()
     
     var viewContext: NSManagedObjectContext
     

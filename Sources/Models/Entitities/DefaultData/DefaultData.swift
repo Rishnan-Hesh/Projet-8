@@ -24,6 +24,7 @@ struct DefaultData {
                 
                 for dayOffset in 1...5 {
                     let sleep = Sleep(context: viewContext)
+                    sleep.id = UUID()
                     sleep.duration = Int64((0...900).randomElement()!)
                     sleep.quality = Int64((0...10).randomElement()!)
                     sleep.startDate = Date(timeIntervalSinceNow: timeIntervalForADay * Double(dayOffset))

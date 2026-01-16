@@ -18,6 +18,7 @@ extension Sleep {
         return NSFetchRequest<Sleep>(entityName: "Sleep")
     }
 
+    @NSManaged public var id: UUID
     @NSManaged public var duration: Int64
     @NSManaged public var quality: Int64
     @NSManaged public var startDate: Date?

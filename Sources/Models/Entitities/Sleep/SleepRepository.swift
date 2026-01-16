@@ -8,16 +8,24 @@ struct SleepRepository {
             self.viewContext = viewContext
         }
     
-    func getSleepSessions() throws -> [Sleep] {
+    func getSleepSessions() throws -> [SleepSession] {
         let request: NSFetchRequest<Sleep> = Sleep.fetchRequest()
         // pas de fetchLimit pour obtenir toutes les sessions
         // tri avec sortDescriptor
         request.sortDescriptors = [NSSortDescriptor(key: "startDate", ascending: false)]
-        return try viewContext.fetch(request)
+
+        do {
+            let entities = try viewContext.fetch(request)
+
+            return entities.map { $0.toDomain() }
+        } catch {
+            return []
+        }
     }
     
     func addSleepSession(startDate: Date, duration: Int, quality: Int) throws {
         let sleepSession = Sleep(context: viewContext)
+        sleepSession.id = UUID()
         sleepSession.startDate = startDate
         sleepSession.duration = Int64(duration)
         sleepSession.quality = Int64(quality)

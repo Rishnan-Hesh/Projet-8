@@ -27,6 +27,10 @@ struct AddExerciseView: View {
     }
 }
 
+#if DEBUG
+
 #Preview {
-    AddExerciseView(viewModel: AddExerciseViewModel(context: PersistenceController.preview.container.viewContext))
+    AddExerciseView(viewModel: AddExerciseViewModel())
 }
+
+#endif
